@@ -1,0 +1,11 @@
+console.log("Hello World");
+console.log(typeof 54);
+console.log(typeof 54n);
+console.log(typeof true);
+console.log(typeof null);
+console.log(typeof undefined);
+console.log(typeof Symbol("gg"));
+console.log(5 == "5");
+console.log(true == 1);
+console.log(5 === "5");
+console.log(true === 1);
