@@ -28,3 +28,4 @@ let asyncFunction2 = () => {
 }
 
 asyncFunction2().then((comments) => console.log(comments));
+
