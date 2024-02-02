@@ -1,80 +1,78 @@
 import { test, expect } from '@playwright/test';
+import { ZakazLandingPage, MetroLandingPage, WineTimeLandingPage, NovusLandingPage, VarusLandingPage } from '../page-objects/zakaz-landing-page';
+import { MakeUpLandingPage } from '../page-objects/makeup-landing-page';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('makeup first test', async ({ page }) => {
+  let makeupLending = new MakeUpLandingPage(page);
+  await makeupLending.goto();
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+  await expect(makeupLending.getMakeUpLogo).toBeVisible();
+  await expect(makeupLending.getMakeUpTab).toBeVisible();
+  await expect(makeupLending.getOfficeTab).toBeVisible();
+  await expect(makeupLending.getParfumeTab).toBeVisible();
+  await expect(makeupLending.getBaskedTab).toBeVisible();
+  await expect(makeupLending.getSearchButton).toBeVisible();
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('zakazUA metro test', async ({ page }) => {
+  let zakazLending = new ZakazLandingPage(page)
+  let metroLending = new MetroLandingPage(page)
+  await zakazLending.goto();
+  await zakazLending.getShopTipeMetro.click();
+  await metroLending.goto();
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  await expect(metroLending.getOffers).toBeVisible();
+  await expect(metroLending.getMilkProducts).toBeVisible();
+  await expect(metroLending.getFrutsProducts).toBeVisible();
+  await expect(metroLending.getSweetsProduct).toBeVisible();
+  await expect(metroLending.getDeliverTo).toBeVisible();
 });
 
-test('makeup first test', async({page}) => { 
-  await page.goto('https://makeup.com.ua/ua/'); 
-  
-  await expect(page.getByRole('link', { name: 'MAKEUP: інтернет-магазин косметики та ароматів' })).toBeVisible(); 
-  await expect(page.getByRole('link', { name: 'Парфумерія', exact: true })).toBeVisible(); 
-  await expect(page.locator('.search-button').first()).toBeVisible(); 
-  await expect(page.getByRole('link', { name: 'Макіяж', exact: true })).toBeVisible(); 
-  await expect(page.locator('.header-office')).toBeVisible(); 
-  await expect(page.locator('.header-basket')).toBeVisible(); 
- }); 
-  
- test('zakazUA metro test', async({page}) => { 
- await page.goto('https://zakaz.ua/uk/'); 
- await page.getByRole('link', { name: 'METRO' }).click(); 
-  
- await page.getByRole('link', { name: 'Вигідні пропозиції Вигідні пропозиції' }).isVisible(); 
- await page.getByRole('link', { name: 'Молочне, яйця, сир Молочне, яйця, сир ' }).isVisible(); 
- await page.getByRole('link', { name: 'Фрукти та овочі Фрукти та овочі ' }).isVisible(); 
- await page.getByRole('link', { name: 'Солодощі Солодощі ' }).isVisible(); 
- await page.getByRole('button', { name: ' Оберіть адресу доставки, щоб дізнатися час доставки' }).isVisible(); 
- }); 
-  
- test('zakazUA winetime test', async({page}) => { 
-   await page.goto('https://zakaz.ua/uk/'); 
-   await page.getByRole('link', { name: 'WINETIME' }).click(); 
-  
-   await page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' }).isVisible(); 
-   await page.getByRole('link', { name: 'ТОП 100 від Winetime ТОП 100' }).isVisible(); 
-   await page.getByTestId('categories_menu_button').isVisible(); 
-   await page.getByTestId('searchBoxInput').isVisible(); 
-   await page.getByRole('button', { name: ' Підбірка для мене' }).isVisible(); 
-  
-   await page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' }).click; 
-  
-   await page.getByRole('heading', { name: 'Акційні пропозиції' }).isVisible(); 
-   }); 
-  
-  
-   test('zakazUA novus test', async({page}) => { 
-     await page.goto('https://zakaz.ua/uk/'); 
-     await page.getByRole('link', { name: 'NOVUS' }).click(); 
-    
-     await page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' }).isVisible(); 
-     await page.getByRole('link', { name: 'Спецпропозиція Спецпропозиція ' }).isVisible(); 
-     await page.getByRole('link', { name: 'Фрукти та овочі Фрукти та овочі ' }).isVisible(); 
-     await page.getByTestId('categories_menu_button').isVisible(); 
-     await page.getByRole('button', { name: ' Оберіть адресу доставки, щоб дізнатися час доставки' }).isVisible(); 
-    
-     }); 
-    
-     test('zakazUA varus test', async({page}) => { 
-       await page.goto('https://zakaz.ua/uk/'); 
-       await page.getByRole('link', { name: 'VARUS' }).click(); 
-      
-       await page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' }).isVisible(); 
-       await page.getByTestId('searchBoxInput').isVisible(); 
-       await page.getByRole('link', { name: 'Молочне, яйця, сир Молочне, яйця, сир ' }).isVisible(); 
-       await page.getByRole('link', { name: ' Мої замовлення' }).isVisible(); 
-       await page.getByRole('link', { name: ' Акції магазину' }).isVisible(); 
-      
-       });
+test('zakazUA winetime test', async ({ page }) => {
+  let zakazLending = new ZakazLandingPage(page)
+  let wineTimeLending = new WineTimeLandingPage(page)
+  await zakazLending.goto();
+  await zakazLending.getShopTipeWineTime.click();
+  await wineTimeLending.goto();
+
+  await expect(wineTimeLending.getMenuCategories).toBeVisible();
+  await expect(wineTimeLending.getOfferProposition).toBeVisible();
+  await expect(wineTimeLending.getTop100).toBeVisible();
+  await expect(wineTimeLending.getMyPrepositions).toBeVisible();
+  await expect(wineTimeLending.getSearchMenu).toBeVisible();
+
+  await wineTimeLending.getOfferProposition.click();
+  await expect(wineTimeLending.getOfferHeader).toBeVisible();
+});
+
+
+test('zakazUA novus test', async ({ page }) => {
+  let zakazLending = new ZakazLandingPage(page);
+  let novusLending = new NovusLandingPage(page);
+  await zakazLending.goto();
+  await zakazLending.getShopTipeNovus.click();
+  await novusLending.goto();
+
+  await expect(novusLending.getCategories).toBeVisible();
+  await expect(novusLending.getDelivery).toBeVisible();
+  await expect(novusLending.getFrutProducts).toBeVisible();
+  await expect(novusLending.getOfferProposition).toBeVisible();
+  await expect(novusLending.getSpecProb).toBeVisible();
+
+});
+
+test('zakazUA varus test', async ({ page }) => {
+  let zakazLending = new ZakazLandingPage(page);
+  let varusLending = new VarusLandingPage(page);
+  await zakazLending.goto();
+  await zakazLending.getShopTipeVarus.click();
+  await varusLending.goto();
+
+  await expect(varusLending.getOfferProposition).toBeVisible();
+  await expect(varusLending.getSearch).toBeVisible();
+  await expect(varusLending.getMilkProducts).toBeVisible();
+  await expect(varusLending.getOfferProposition).toBeVisible();
+  await expect(varusLending.getMyOrders).toBeVisible();
+  await expect(varusLending.getSale).toBeVisible();
+
+});
