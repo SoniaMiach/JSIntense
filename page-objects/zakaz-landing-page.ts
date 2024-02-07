@@ -6,6 +6,10 @@ export class ZakazLandingPage {
     readonly getShopTipeWineTime: Locator;
     readonly getShopTipeNovus: Locator;
     readonly getShopTipeVarus: Locator;
+    readonly getLoginButton: Locator;
+    readonly getPhoneForm: Locator;
+    readonly getPasswordForm: Locator;
+    readonly getSubmitButton: Locator;
 
 
     constructor(page: Page) {
@@ -14,10 +18,23 @@ export class ZakazLandingPage {
         this.getShopTipeWineTime = page.locator('//img[@alt="WINETIME"]');
         this.getShopTipeNovus = page.getByRole('link', { name: 'NOVUS' });
         this.getShopTipeVarus = page.getByRole('link', { name: 'VARUS' });
+        this.getLoginButton = page.getByTestId('login-button');
+        this.getPhoneForm = page.locator('//input[@class="form-control jsx-2736456830"]');
+        this.getPasswordForm = page.locator('//input[@type = "password"]');
+        this.getSubmitButton = page.locator('//button[@data-marker="Submit"]');
     }
 
     async goto() {
         await this.page.goto('https://zakaz.ua/uk/');
+    }
+
+    async loginByPhone(phone: string, password: string){
+        await this.getLoginButton.click();
+        await this.getPhoneForm.click();
+        await this.getPhoneForm.fill(phone);
+        await this.getPasswordForm.click();
+        await this.getPasswordForm.fill(password);
+        await this.getSubmitButton.click();
     }
 }
 
@@ -31,15 +48,15 @@ export class MetroLandingPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.getOffers = page.locator('//span[contains(text(), "Акційні пропозиції")]').first();
+        this.getOffers = page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' });
         this.getMilkProducts = page.getByRole('link', { name: 'Молочне, яйця, сир Молочне, яйця, сир ' });
         this.getFrutsProducts = page.getByRole('link', { name: 'Фрукти та овочі Фрукти та овочі ' });
         this.getSweetsProduct = page.getByRole('link', { name: 'Солодощі Солодощі ' });
         this.getDeliverTo = page.getByRole('button', { name: ' Оберіть адресу доставки, щоб дізнатися час доставки' });
     }
 
-    async goto() {
-        await this.page.goto('https://metro.zakaz.ua/uk/');
+    async metroPage() {
+        await this.page.waitForLoadState();
     }
 }
 
@@ -52,7 +69,7 @@ export class WineTimeLandingPage {
     readonly getMyPrepositions: Locator;
     readonly getOfferHeader: Locator;
 
-    constructor(page:Page){
+    constructor(page: Page) {
         this.page = page;
         this.getOfferProposition = page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' });
         this.getTop100 = page.getByRole('link', { name: 'ТОП 100 від Winetime ТОП 100' });
@@ -62,8 +79,8 @@ export class WineTimeLandingPage {
         this.getMyPrepositions = page.locator('//a[@data-marker="orders widget"]').first();
     }
 
-    async goto(){
-        await this.page.goto('https://winetime.zakaz.ua/uk/');
+    async winetimePage() {
+        await this.page.waitForLoadState();
     }
 }
 
@@ -75,7 +92,7 @@ export class NovusLandingPage {
     readonly getCategories: Locator;
     readonly getDelivery: Locator;
 
-    constructor(page:Page){
+    constructor(page: Page) {
         this.page = page;
         this.getOfferProposition = page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' });
         this.getSpecProb = page.getByRole('link', { name: 'Спецпропозиція Спецпропозиція ' });
@@ -84,7 +101,7 @@ export class NovusLandingPage {
         this.getDelivery = page.getByRole('button', { name: ' Оберіть адресу доставки, щоб дізнатися час доставки' });
     }
 
-    async goto(){
+    async goto() {
         await this.page.goto('https://novus.zakaz.ua/uk/');
     }
 }
@@ -97,7 +114,7 @@ export class VarusLandingPage {
     readonly getMyOrders: Locator;
     readonly getSale: Locator;
 
-    constructor(page:Page){
+    constructor(page: Page) {
         this.page = page;
         this.getOfferProposition = page.getByRole('link', { name: 'Акційні пропозиції Акційні пропозиції' });
         this.getSearch = page.getByTestId('searchBoxInput');
@@ -105,8 +122,8 @@ export class VarusLandingPage {
         this.getMyOrders = page.getByRole('link', { name: ' Мої замовлення' });
         this.getSale = page.getByRole('link', { name: ' Акції магазину' });
     }
-    
-    async goto(){
+
+    async goto() {
         await this.page.goto('https://varus.zakaz.ua/uk/');
     }
 }

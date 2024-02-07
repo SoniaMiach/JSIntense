@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { ZakazLandingPage, MetroLandingPage, WineTimeLandingPage, NovusLandingPage, VarusLandingPage } from '../page-objects/zakaz-landing-page';
 import { MakeUpLandingPage } from '../page-objects/makeup-landing-page';
+import{test} from "../fixtures/fixtures"
 
 test('makeup first test', async ({ page }) => {
   let makeupLending = new MakeUpLandingPage(page);
@@ -14,13 +15,18 @@ test('makeup first test', async ({ page }) => {
   await expect(makeupLending.getSearchButton).toBeVisible();
 });
 
-test('zakazUA metro test', async ({ page }) => {
-  let zakazLending = new ZakazLandingPage(page)
-  let metroLending = new MetroLandingPage(page)
-  await zakazLending.goto();
-  await zakazLending.getShopTipeMetro.click();
-  await metroLending.goto();
+test('zakazUA metro test', async ({ page, zakazLanding , context}) => {
+  
+  const pagePromise = context.waitForEvent('page');
+  await zakazLanding.getShopTipeMetro.click();
+  const newPage = await pagePromise;
+  await newPage.waitForLoadState();
 
+  let metroLending = new MetroLandingPage(newPage)
+
+
+  await metroLending.metroPage();
+  
   await expect(metroLending.getOffers).toBeVisible();
   await expect(metroLending.getMilkProducts).toBeVisible();
   await expect(metroLending.getFrutsProducts).toBeVisible();
@@ -28,12 +34,15 @@ test('zakazUA metro test', async ({ page }) => {
   await expect(metroLending.getDeliverTo).toBeVisible();
 });
 
-test('zakazUA winetime test', async ({ page }) => {
-  let zakazLending = new ZakazLandingPage(page)
-  let wineTimeLending = new WineTimeLandingPage(page)
-  await zakazLending.goto();
-  await zakazLending.getShopTipeWineTime.click();
-  await wineTimeLending.goto();
+test('zakazUA winetime test', async ({ page, zakazLanding, context }) => {
+  const pagePromise = context.waitForEvent('page');
+  await zakazLanding.getShopTipeWineTime.click();
+  const newPage = await pagePromise;
+  await newPage.waitForLoadState();
+
+  let wineTimeLending = new WineTimeLandingPage(newPage)
+ 
+  await wineTimeLending.winetimePage();
 
   await expect(wineTimeLending.getMenuCategories).toBeVisible();
   await expect(wineTimeLending.getOfferProposition).toBeVisible();
