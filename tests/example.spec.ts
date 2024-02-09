@@ -24,7 +24,6 @@ test('zakazUA metro test', async ({ page, zakazLanding , context}) => {
 
   let metroLending = new MetroLandingPage(newPage)
 
-
   await metroLending.metroPage();
   
   await expect(metroLending.getOffers).toBeVisible();
